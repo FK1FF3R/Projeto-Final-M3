@@ -1,62 +1,52 @@
 -- 1 Consulta: Listar todas as emendas pendentes com os detalhes do político e da empresa
 SELECT 
-    E.id_emenda, 
-    E.valor, 
-    E.motivo, 
-    E.setor, 
-    E.data_emenda, 
-    E.status_emenda, 
-    P.nome AS nome_politico, 
-    P.cargo, 
-    P.partido, 
-    Emp.razao_social AS empresa_razao_social, 
-    Emp.nome_fantasia AS empresa_nome_fantasia,
-    Emp.cnpj AS cnpj_empresa
-FROM 
-    Emenda E
-JOIN 
-    Politico P ON E.id_politico = P.id_politico
-JOIN 
-    Empresa Emp ON E.id_empresa = Emp.id_empresa
-WHERE 
-    E.status_emenda = 'Pendente';
+    e.id_emenda,
+    e.valor,
+    e.motivo,
+    e.setor,
+    e.data_solicitacao,
+    e.status,
+    p.nome AS nome_politico,
+    p.cargo,
+    p.partido,
+    p.estado,
+    p.cidade,
+    emp.nome AS nome_empresa,
+    emp.cnpj,
+    emp.localizacao
+FROM Emenda e
+INNER JOIN Politico p ON e.id_politico = p.id_politico
+INNER JOIN Empresa emp ON e.id_empresa = emp.id_empresa
+WHERE e.status = 'Pendente';
 
--- 2 Consulta: Listar todas as denúncias resolvidas com os detalhes do denunciante e do político envolvido
+-- 2 Consulta: Listar todas as denúncias resolvidas com os políticos envolvidos
 SELECT 
-    D.id_denuncia, 
-    D.nome_denunciante, 
-    D.motivo, 
-    D.descricao_detalhada, 
-    D.data_denuncia, 
-    D.status_denuncia, 
-    D.prioridade, 
-    U.nome AS nome_usuario, 
-    P.nome AS nome_politico, 
-    Emp.razao_social AS empresa_razao_social, 
-    E.motivo AS motivo_emenda, 
-    OC.nome_fantasia AS orgao_controle
-FROM 
-    Denuncia D
-JOIN 
-    Usuario U ON D.id_usuario = U.id_usuario
-LEFT JOIN 
-    Politico P ON D.id_politico = P.id_politico
-LEFT JOIN 
-    Empresa Emp ON D.id_empresa = Emp.id_empresa
-LEFT JOIN 
-    Emenda E ON D.id_emenda = E.id_emenda
-LEFT JOIN 
-    OrgaoControle OC ON D.id_orgao = OC.id_orgao
-WHERE 
-    D.status_denuncia = 'Resolvida';
+    d.id_denuncia,
+    d.motivo,
+    d.descricao_detalhada,
+    d.data,
+    d.status,
+    d.prioridade,
+    p.nome AS nome_politico,
+    p.cargo,
+    p.partido,
+    p.estado,
+    p.cidade
+FROM Denuncia d
+LEFT JOIN Politico p ON d.id_politico = p.id_politico
+WHERE d.status = 'Resolvida';
 
 -- 3 Consulta: Listar todos os órgãos de controle e as denúncias associadas
 SELECT 
-    OC.nome_fantasia AS orgao_controle, 
-    D.id_denuncia, 
-    D.motivo, 
-    D.status_denuncia
-FROM 
-    Denuncia D
-RIGHT JOIN 
-    OrgaoControle OC ON D.id_orgao = OC.id_orgao;
+    o.id_orgao,
+    o.nome_fantasia AS orgao_nome,
+    o.ramo,
+    o.responsavel AS responsavel_orgao,
+    d.id_denuncia,
+    d.motivo,
+    d.descricao_detalhada,
+    d.data AS data_denuncia,
+    d.status,
+    d.prioridade
+FROM OrgaoControle o
+LEFT JOIN Denuncia d ON o.id_orgao = d.id_orgao;
