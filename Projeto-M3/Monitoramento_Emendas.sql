@@ -17,6 +17,7 @@ CREATE TABLE Politico (
     cpf VARCHAR(14) NOT NULL UNIQUE,
     cargo VARCHAR(50) NOT NULL,
     partido VARCHAR(50) NOT NULL,
+<<<<<<< HEAD
     estado VARCHAR(2) NOT NULL,
     cidade VARCHAR(100) NOT NULL,
     data_inicial DATE NOT NULL,
@@ -255,3 +256,16 @@ SELECT * FROM Usuario;
 SELECT * FROM Empresa;
 SELECT * FROM OrgaoControle;
 SELECT * FROM Denuncia;
+=======
+    cargo VARCHAR(100) NOT NULL,
+    estado CHAR(2) NOT NULL
+);
+
+CREATE TABLE Empresa (
+    cnpj id INT PRIMARY KEY NOT NULL,
+    razao_social VARCHAR(200) NOT NULL,
+    nome_fantasia VARCHAR(200) NOT NULL,
+    setor VARCHAR(100) NOT NULL,
+    localizacao VARCHAR(100) NOT NULL
+    );
+>>>>>>> a16863d3f797f71720d9c66bdcfc0a06d21e6004
