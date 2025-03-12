@@ -41,7 +41,7 @@ CREATE TABLE Emenda (
     motivo VARCHAR(255) NOT NULL,
     setor VARCHAR(100) NOT NULL,
     data_emenda DATE NOT NULL,
-    status_emenda VARCHAR(50) DEFAULT 'Ativa',
+    status_emenda ENUM('Ativa', 'Concluída', 'Pendente', 'Cancelada') DEFAULT 'Ativa',
     id_politico INT NOT NULL,
     id_empresa INT NOT NULL,
     FOREIGN KEY (id_politico) REFERENCES Politico(id_politico),
