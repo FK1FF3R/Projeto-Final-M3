@@ -54,7 +54,7 @@ CREATE TABLE Obra (
     local_obra VARCHAR(255) NOT NULL,
     data_inicio DATE NOT NULL,
     data_termino DATE NOT NULL,
-    status VARCHAR(50) NOT NULL,
+    status ENUM('Em andamento', 'Concluída', 'Em planejamento') NOT NULL,
     orcamento DECIMAL(15, 2),
     responsavel_tecnico VARCHAR(255)
 );
@@ -65,7 +65,7 @@ CREATE TABLE Obra_Emenda (
     id_emenda INT NOT NULL,
     data_associacao DATE NOT NULL,
     responsavel_vinculo VARCHAR(255),
-    status_vinculo VARCHAR(50) DEFAULT 'Ativo',
+    status_vinculo ENUM('Ativo', 'Concluído', 'Cancelado', 'Planejamento') DEFAULT 'Ativo',
     FOREIGN KEY (id_obra) REFERENCES Obra(id_obra),
     FOREIGN KEY (id_emenda) REFERENCES Emenda(id_emenda)
 );
@@ -87,8 +87,8 @@ CREATE TABLE Denuncia (
     motivo VARCHAR(255) NOT NULL,
     descricao_detalhada TEXT,
     data_denuncia DATE NOT NULL,
-    status_denuncia VARCHAR(50) NOT NULL,
-    prioridade VARCHAR(20) DEFAULT 'Média',
+    status_denuncia ENUM('Em investigação', 'Resolvida', 'Pendente') NOT NULL,
+    prioridade ENUM('Alta', 'Média', 'Baixa', 'Crítica') DEFAULT 'Média',
     id_usuario INT NOT NULL,
     id_politico INT,
     id_empresa INT,
