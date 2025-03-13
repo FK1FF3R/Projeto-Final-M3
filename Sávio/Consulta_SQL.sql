@@ -1,4 +1,4 @@
--- 1) Consulta de Emendas Aprovadas e Seus Respectivos Políticos
+-- 1) Consulta de Emendas Aprovadas
 SELECT 
     e.id_emenda,
     e.valor,
@@ -13,7 +13,7 @@ JOIN Politico p ON e.id_politico = p.id_politico
 JOIN Empresa emp ON e.id_empresa = emp.id_empresa
 WHERE e.status = 'Concluída';
 
--- 2) Consulta de Obras em Andamento com Seus Orçamentos
+-- 2) Consulta de Obras em Andamento
 SELECT 
     o.id_obra,
     o.nome AS nome_obra,
@@ -27,7 +27,7 @@ FROM Obra o
 JOIN Empresa emp ON o.id_empresa = emp.id_empresa
 WHERE o.status = 'Em andamento';
 
--- 3) Consulta de Denúncias Pendentes e Seus Envolvidos
+-- 3) Consulta de Denúncias Pendentes
 SELECT 
     d.id_denuncia,
     d.motivo,
